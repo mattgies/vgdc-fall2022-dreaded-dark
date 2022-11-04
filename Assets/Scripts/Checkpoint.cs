@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Checkpoint : MonoBehaviour
+{
+    private Vector2 LastCheckPointPos;
+    
+    void Start(){
+        LastCheckPointPos = transform.position;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Checkpoint")){
+            LastCheckPointPos = other.gameObject.transform.position;
+        }
+    }
+
+    public Vector2 getLastCheckPointPos(){
+        return LastCheckPointPos;
+    }
+}
