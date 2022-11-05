@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TurnOnLights : MonoBehaviour
+public class ToggleLights : MonoBehaviour
 {
     [SerializeField] GameObject globalLight;
     private UnityEngine.Rendering.Universal.Light2D light;
-    private bool _canToggleLights = false;
+    private bool _canToggleLights;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
         light = globalLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        _canToggleLights = false;
+        playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -24,7 +27,14 @@ public class TurnOnLights : MonoBehaviour
 
     void Update(){
         if (_canToggleLights && Input.GetKeyDown(KeyCode.F)) {
-            light.intensity = light.intensity == 0.0f ? 1.0f : 0.0f;
+            if (light.intensity == 0.0f) {
+                light.intensity = 1.0f;
+                playerMovement.prohibitMovement();
+            }
+            else {
+                light.intensity = 0.0f;
+                playerMovement.enableMovement();
+            }
         }
     }
 }
