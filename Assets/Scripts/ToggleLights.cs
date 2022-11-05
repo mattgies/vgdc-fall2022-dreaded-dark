@@ -6,6 +6,7 @@ using UnityEngine;
 public class ToggleLights : MonoBehaviour
 {
     [SerializeField] GameObject globalLight;
+    [SerializeField] KeyCode toggleKey;
     private UnityEngine.Rendering.Universal.Light2D light;
     private bool _canToggleLights;
     private PlayerMovement playerMovement;
@@ -26,7 +27,7 @@ public class ToggleLights : MonoBehaviour
     }
 
     void Update(){
-        if (_canToggleLights && Input.GetKeyDown(KeyCode.F)) {
+        if (_canToggleLights && Input.GetKeyDown(toggleKey)) {
             if (light.intensity == 0.0f) {
                 light.intensity = 1.0f;
                 playerMovement.prohibitMovement();
