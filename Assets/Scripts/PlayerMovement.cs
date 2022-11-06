@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 6f);
                 jumps--;
             }
+        } else{
+            rb.velocity = new Vector2(0, 0);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision){
