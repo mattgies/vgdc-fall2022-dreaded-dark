@@ -10,6 +10,7 @@ public class PlayerDeath : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //spikes
         if (other.CompareTag("Environmental Hazard")){
             transform.position = checkpointPos.getLastCheckPointPos();
         }
