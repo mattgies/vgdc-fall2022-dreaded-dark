@@ -7,13 +7,13 @@ public class ToggleLights : MonoBehaviour
 {
     [SerializeField] GameObject globalLight;
     [SerializeField] KeyCode toggleKey;
-    private UnityEngine.Rendering.Universal.Light2D light;
+    private UnityEngine.Rendering.Universal.Light2D lightSource;
     private bool _canToggleLights;
     private PlayerMovement playerMovement;
 
     void Start()
     {
-        light = globalLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        lightSource= globalLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
         _canToggleLights = false;
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
@@ -28,12 +28,12 @@ public class ToggleLights : MonoBehaviour
 
     void Update(){
         if (_canToggleLights && Input.GetKeyDown(toggleKey)) {
-            if (light.intensity == 0.0f) {
-                light.intensity = 1.0f;
+            if (lightSource.intensity == 0.0f) {
+                lightSource.intensity = 1.0f;
                 playerMovement.prohibitMovement();
             }
             else {
-                light.intensity = 0.0f;
+                lightSource.intensity = 0.0f;
                 playerMovement.enableMovement();
             }
         }
