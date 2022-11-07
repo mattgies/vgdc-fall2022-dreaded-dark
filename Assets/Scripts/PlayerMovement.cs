@@ -42,14 +42,17 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 6f);
                 jumps--;
             }
-        } else{
+        } 
+        else
+        {
             rb.velocity = new Vector2(0, 0);
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0 && canDash)
         {
             StartCoroutine(Dash());
         }
+
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.tag == "Ground")
@@ -64,13 +67,28 @@ public class PlayerMovement : MonoBehaviour
         _canMove = true;
     }
 
+    public void prohibitDash()
+    {
+        canDash = false;
+    }
+
+    public void enableDash()
+    {
+        canDash = true;
+    }
+
     private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+
+        if(Input.GetAxisRaw("Horizontal") < 0)
+            rb.velocity = new Vector2(transform.localScale.x * dashingPower * -1, 0f);
+        else
+            rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        
         //tr.emitting = true;
 
         //Stops dashing
