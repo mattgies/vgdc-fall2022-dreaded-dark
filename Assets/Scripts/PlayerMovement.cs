@@ -7,14 +7,14 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody2D rb;
     private int jumps;
-    private bool _canMove = true;
+    private bool canMove = true;
 
     // Code for dashing
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    private float dashingCooldown = 0.5f;
 
    // [SerializeField] private TrailRenderer tr;
 
@@ -28,31 +28,30 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isDashing)
-        {
-            return;
-        }
+        float dirX = Input.GetAxisRaw("Horizontal");
 
-        if (_canMove) {
-            float dirX = Input.GetAxisRaw("Horizontal");
+        if (isDashing) {
+            rb.velocity = new Vector2(rb.velocity.x + dirX * 0.05f, rb.velocity.y);
+        }
+        else if (canMove) {
             rb.velocity = new Vector2(dirX * 4f, rb.velocity.y);
 
+            // jump
             bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
             if (jumpConditions && jumps > 0) {
                 rb.velocity = new Vector2(rb.velocity.x, 6f);
                 jumps--;
             }
-        } 
-        else
-        {
-            rb.velocity = new Vector2(0, 0);
+            // dash
+            else if (Input.GetKeyDown(KeyCode.LeftShift)
+                && Input.GetAxis("Horizontal") != 0
+                && canDash) {
+                StartCoroutine(Dash());    
+            }
         }
-
-        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0 && canDash)
-        {
-            StartCoroutine(Dash());
+        else {
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
-
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.tag == "Ground")
@@ -60,20 +59,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void prohibitMovement() {
-        _canMove = false;
-    }
-
-    public void enableMovement() {
-        _canMove = true;
-    }
-
-    public void prohibitDash()
-    {
+        canMove = false;
         canDash = false;
     }
 
-    public void enableDash()
-    {
+    public void enableMovement() {
+        canMove = true;
         canDash = true;
     }
 

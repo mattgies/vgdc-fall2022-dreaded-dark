@@ -31,12 +31,10 @@ public class ToggleLights : MonoBehaviour
             if (lightSource.intensity == 0.0f) {
                 lightSource.intensity = 1.0f;
                 playerMovement.prohibitMovement();
-                playerMovement.prohibitDash();
             }
             else {
                 lightSource.intensity = 0.0f;
                 playerMovement.enableMovement();
-                playerMovement.enableDash();
             }
         }
     }
