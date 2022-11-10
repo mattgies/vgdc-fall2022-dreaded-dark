@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private int jumps;
     private bool canMove = true;
 
-    // Code for dashing
     private bool canDash = true;
-    private bool isDashing;
+    private bool isDashing = false;
+    private bool isGrounded = true;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 0.5f;
@@ -30,16 +30,33 @@ public class PlayerMovement : MonoBehaviour
     {
         float dirX = Input.GetAxisRaw("Horizontal");
 
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.01f);
+        if (hit.collider) {
+            isGrounded = true;
+        }
+        else {
+            isGrounded = false;
+        }
+        
+        if (isGrounded) {
+            jumps = 2;
+        }
+
         if (isDashing) {
-            rb.velocity = new Vector2(rb.velocity.x + dirX * 0.05f, rb.velocity.y);
+            if (canMove) {
+                rb.velocity = new Vector2(rb.velocity.x + dirX * 0.05f, rb.velocity.y);
+            }
+            else {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
         }
         else if (canMove) {
-            rb.velocity = new Vector2(dirX * 4f, rb.velocity.y);
+            rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
 
             // jump
             bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
             if (jumpConditions && jumps > 0) {
-                rb.velocity = new Vector2(rb.velocity.x, 6f);
+                rb.velocity = new Vector2(rb.velocity.x, 12f);
                 jumps--;
             }
             // dash
@@ -52,10 +69,6 @@ public class PlayerMovement : MonoBehaviour
         else {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.tag == "Ground")
-            jumps = 2;
     }
 
     public void prohibitMovement() {
