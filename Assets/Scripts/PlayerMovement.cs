@@ -6,15 +6,15 @@ public class PlayerMovement : MonoBehaviour
 {
     
     private Rigidbody2D rb;
-    private int jumps;
+    private int jumps = 0;
     private bool canMove = true;
 
-    private bool canDash = true;
-    private bool isDashing = false;
+    // private bool canDash = true;
+    // private bool isDashing = false;
     private bool isGrounded = true;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    // private float dashingPower = 24f;
+    // private float dashingTime = 0.2f;
+    // private float dashingCooldown = 0.5f;
 
    // [SerializeField] private TrailRenderer tr;
 
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         float dirX = Input.GetAxisRaw("Horizontal");
 
         RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.01f);
-        if (hit.collider) {
+        if (hit.collider && hit.collider.gameObject.tag == "Ground") {
             isGrounded = true;
         }
         else {
@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
             jumps = 2;
         }
 
+        /*
         if (isDashing) {
             if (canMove) {
                 rb.velocity = new Vector2(rb.velocity.x + dirX * 0.05f, rb.velocity.y);
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }
-        else if (canMove) {
+        else*/ if (canMove) {
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
 
             // jump
@@ -59,12 +60,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 12f);
                 jumps--;
             }
+            /*
             // dash
             else if (Input.GetKeyDown(KeyCode.LeftShift)
                 && Input.GetAxis("Horizontal") != 0
                 && canDash) {
                 StartCoroutine(Dash());    
             }
+            */
         }
         else {
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -73,14 +76,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void prohibitMovement() {
         canMove = false;
-        canDash = false;
+        // canDash = false;
     }
 
     public void enableMovement() {
         canMove = true;
-        canDash = true;
+        // canDash = true;
     }
 
+    /*
     private IEnumerator Dash()
     {
         canDash = false;
@@ -103,4 +107,5 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+    */
 }
