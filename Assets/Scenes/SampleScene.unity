@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212037718}
   - component: {fileID: 212037719}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 281898440}
   - component: {fileID: 281898439}
   - component: {fileID: 281898442}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSwitch1
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 297229526}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSwitches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 609036314}
   - component: {fileID: 609036315}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2219,7 +2219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 910317597}
   - component: {fileID: 910317598}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2547,7 +2547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030119654}
   - component: {fileID: 1030119655}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2631,7 +2631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1199966723}
   - component: {fileID: 1199966724}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2894,7 +2894,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274050271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4967, y: -12, z: 0}
+  m_LocalPosition: {x: 0.4967, y: -21.36, z: 0}
   m_LocalScale: {x: 1000, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3356,7 +3356,7 @@ GameObject:
   - component: {fileID: 1545776510}
   - component: {fileID: 1545776509}
   - component: {fileID: 1545776508}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSwitch3
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -3738,7 +3738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063770414}
   - component: {fileID: 2063770415}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3824,7 +3824,7 @@ GameObject:
   - component: {fileID: 2135063549}
   - component: {fileID: 2135063548}
   - component: {fileID: 2135063547}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSwitch2
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
