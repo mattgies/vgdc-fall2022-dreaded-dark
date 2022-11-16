@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     // private bool canDash = true;
     // private bool isDashing = false;
-    private bool isGrounded = true;
     // private float dashingPower = 24f;
     // private float dashingTime = 0.2f;
     // private float dashingCooldown = 0.5f;
@@ -33,32 +32,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float dirX = Input.GetAxisRaw("Horizontal");
 
-        Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
-        Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.1f, rb.position.y);
-
-        RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.005f);
-        RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.005f);
-        
-        Color rayColor = Color.red;
-        if (leftSideHit.collider || rightSideHit.collider) {
-            Debug.Log("collider hit");
-            rayColor = Color.green;
-        }
-        Debug.DrawRay(leftSideSensor, Vector2.down, rayColor, 1);
-        Debug.DrawRay(rightSideSensor, Vector2.down, rayColor, 1);
-        
-        if (leftSideHit.collider && leftSideHit.collider.gameObject.tag == "Ground"
-            || rightSideHit.collider && rightSideHit.collider.gameObject.tag == "Ground") {
-            isGrounded = true;
-        }
-        else {
-            isGrounded = false;
-        }
-        
-        if (isGrounded) {
-            jumps = 2;
-        }
-
         /*
         if (isDashing) {
             if (canMove) {
@@ -71,12 +44,6 @@ public class PlayerMovement : MonoBehaviour
         else*/ if (canMove) {
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
 
-            // jump
-            bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-            if (jumpConditions && jumps > 0) {
-                rb.velocity = new Vector2(rb.velocity.x, 12f);
-                jumps--;
-            }
             /*
             // dash
             else if (Input.GetKeyDown(KeyCode.LeftShift)
@@ -85,6 +52,33 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(Dash());    
             }
             */
+            Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
+            Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.1f, rb.position.y);
+
+            RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.03f);
+            RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.03f);
+            
+            Color rayColor = Color.red;
+
+            if (
+                (leftSideHit.collider && leftSideHit.collider.gameObject.tag == "Ground"
+                || rightSideHit.collider && rightSideHit.collider.gameObject.tag == "Ground")
+                && rb.velocity.y <= 0
+            ) {
+                jumps = 2;
+
+                Debug.Log("collider hit");
+                rayColor = Color.green;
+            }
+            Debug.DrawRay(leftSideSensor, Vector2.down, rayColor, 1);
+            Debug.DrawRay(rightSideSensor, Vector2.down, rayColor, 1);
+
+            // jump
+            bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+            if (jumpConditions && jumps > 0) {
+                rb.velocity = new Vector2(rb.velocity.x, 12f);
+                jumps--;
+            }
         }
         else {
             rb.velocity = new Vector2(0, rb.velocity.y);
