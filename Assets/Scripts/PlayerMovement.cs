@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D collider;
 
     private int jumpNumber = 1;
-    private bool canMove = true;
+    public bool canMove = true;
     private float coyoteTimeCounter;
     private float coyoteTimeFirst = 0.15f;
     private float coyoteTimeSecond = 0.3f;
@@ -35,26 +35,10 @@ public class PlayerMovement : MonoBehaviour
     {
         float dirX = Input.GetAxisRaw("Horizontal");
 
-        /*
-        if (isDashing) {
-            if (canMove) {
-                rb.velocity = new Vector2(rb.velocity.x + dirX * 0.05f, rb.velocity.y);
-            }
-            else {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-            }
-        }
-        else*/ if (canMove) {
+        if (canMove) {
+            rb.gravityScale = 3;
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
 
-            /*
-            // dash
-            else if (Input.GetKeyDown(KeyCode.LeftShift)
-                && Input.GetAxis("Horizontal") != 0
-                && canDash) {
-                StartCoroutine(Dash());    
-            }
-            */
             Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
             Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.1f, rb.position.y);
 
@@ -71,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
                 jumpNumber = 1;
                 coyoteTimeCounter = coyoteTimeFirst;
 
-                Debug.Log("collider hit");
                 rayColor = Color.green;
             }
             else {
@@ -100,42 +83,16 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         else {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(0, 0);
+            rb.gravityScale = 0;
         }
     }
 
     public void prohibitMovement() {
         canMove = false;
-        // canDash = false;
     }
 
     public void enableMovement() {
         canMove = true;
-        // canDash = true;
     }
-
-    /*
-    private IEnumerator Dash()
-    {
-        canDash = false;
-        isDashing = true;
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-
-        if(Input.GetAxisRaw("Horizontal") < 0)
-            rb.velocity = new Vector2(transform.localScale.x * dashingPower * -1, 0f);
-        else
-            rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        
-        //tr.emitting = true;
-
-        //Stops dashing
-        yield return new WaitForSeconds(dashingTime);
-        //tr.emitting = false; 
-        rb.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-    }
-    */
 }

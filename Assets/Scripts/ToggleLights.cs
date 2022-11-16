@@ -28,6 +28,8 @@ public class ToggleLights : MonoBehaviour
 
     void Update(){
         if (_canToggleLights && Input.GetKeyDown(toggleKey)) {
+            Debug.Log(_canToggleLights);
+            Debug.Log(lightSource.intensity);
             if (lightSource.intensity == 0.0f) {
                 lightSource.intensity = 1.0f;
                 playerMovement.prohibitMovement();
@@ -36,6 +38,10 @@ public class ToggleLights : MonoBehaviour
                 lightSource.intensity = 0.0f;
                 playerMovement.enableMovement();
             }
+        }
+
+        if (!playerMovement.canMove) {
+            _canToggleLights = true;
         }
     }
 }
