@@ -8,8 +8,11 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
-    private int jumps = 2;
+    private int jumpNumber = 1;
     private bool canMove = true;
+    private float coyoteTimeCounter;
+    private float coyoteTimeFirst = 0.15f;
+    private float coyoteTimeSecond = 0.3f;
 
     // private bool canDash = true;
     // private bool isDashing = false;
@@ -65,19 +68,35 @@ public class PlayerMovement : MonoBehaviour
                 || rightSideHit.collider && rightSideHit.collider.gameObject.tag == "Ground")
                 && rb.velocity.y <= 0
             ) {
-                jumps = 2;
+                jumpNumber = 1;
+                coyoteTimeCounter = coyoteTimeFirst;
 
                 Debug.Log("collider hit");
                 rayColor = Color.green;
+            }
+            else {
+                if (jumpNumber == 1){
+                    coyoteTimeCounter -= Time.deltaTime;
+                }
+                else if (jumpNumber == 2){ 
+                    coyoteTimeCounter += Time.deltaTime;
+                }
             }
             Debug.DrawRay(leftSideSensor, Vector2.down, rayColor, 1);
             Debug.DrawRay(rightSideSensor, Vector2.down, rayColor, 1);
 
             // jump
             bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-            if (jumpConditions && jumps > 0) {
+            //first jump
+            if (jumpConditions && jumpNumber == 1 && coyoteTimeCounter > 0f) {
                 rb.velocity = new Vector2(rb.velocity.x, 12f);
-                jumps--;
+                jumpNumber++;
+                coyoteTimeCounter = 0f;
+            }
+            //second jump
+            else if (jumpConditions && jumpNumber == 2 && coyoteTimeCounter > coyoteTimeSecond) {
+                rb.velocity = new Vector2(rb.velocity.x, 12f);
+                jumpNumber++;
             }
         }
         else {
