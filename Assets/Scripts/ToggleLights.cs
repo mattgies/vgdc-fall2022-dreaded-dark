@@ -33,15 +33,12 @@ public class ToggleLights : MonoBehaviour
             if (lightSource.intensity == 0.0f) {
                 lightSource.intensity = 1.0f;
                 playerMovement.prohibitMovement();
+                _canToggleLights = true;
             }
             else {
                 lightSource.intensity = 0.0f;
                 playerMovement.enableMovement();
             }
-        }
-
-        if (!playerMovement.canMove) {
-            _canToggleLights = true;
         }
     }
 }

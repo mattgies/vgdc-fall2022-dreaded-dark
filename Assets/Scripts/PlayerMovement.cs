@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody2D rb;
     private BoxCollider2D collider;
+    private SpriteRenderer rend;
+    private Animator anim;
 
     private int jumpNumber = 1;
     public bool canMove = true;
@@ -28,15 +30,16 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
+        rend = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float dirX = Input.GetAxisRaw("Horizontal");
-
+        Debug.Log(jumpNumber);
         if (canMove) {
-            rb.gravityScale = 3;
+            float dirX = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
 
             Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
@@ -81,18 +84,28 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 12f);
                 jumpNumber++;
             }
-        }
-        else {
-            rb.velocity = new Vector2(0, 0);
-            rb.gravityScale = 0;
+
+            anim.speed = Mathf.Min(rb.velocity.magnitude / 10, 1);
+            
+            if (rb.velocity.x > 0 && rend.flipX == true) {
+                rend.flipX = false;
+            }
+            else if (rb.velocity.x < 0 && rend.flipX == false) {
+                rend.flipX = true;
+            }
         }
     }
 
     public void prohibitMovement() {
+        rb.velocity = new Vector2(0, 0);
+        rb.gravityScale = 0;
         canMove = false;
+        anim.enabled = false;
     }
 
     public void enableMovement() {
+        rb.gravityScale = 3f;
         canMove = true;
+        anim.enabled = true;
     }
 }
