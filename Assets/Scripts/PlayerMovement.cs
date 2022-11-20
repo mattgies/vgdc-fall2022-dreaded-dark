@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     
     private Rigidbody2D rb;
-    private BoxCollider2D collider;
+    private CapsuleCollider2D collider;
     private SpriteRenderer rend;
     private Animator anim;
 
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<BoxCollider2D>();
+        collider = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
         rend = GetComponent<SpriteRenderer>();
     }
@@ -45,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
             Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
             Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.1f, rb.position.y);
 
-            RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.03f);
-            RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.03f);
+            RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, GetComponent<CapsuleCollider2D>().size.y / 2 + 0.03f);
+            RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, GetComponent<CapsuleCollider2D>().size.y / 2 + 0.03f);
             
             Color rayColor = Color.red;
 
@@ -107,5 +107,9 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 3f;
         canMove = true;
         anim.enabled = true;
+    }
+
+    public void resetJump() {
+        jumpNumber = 1;
     }
 }
