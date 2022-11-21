@@ -5,10 +5,13 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     private Vector2 LastCheckPointPos;
+    private UnityEngine.Rendering.Universal.Light2D lightSource;
+    private PlayerMovement playerMovement;
     
     void Start(){
         LastCheckPointPos = transform.position;
     }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Checkpoint")){
