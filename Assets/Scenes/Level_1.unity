@@ -2486,7 +2486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a4f0376003c2b4e98266006e65e0be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalLight: {fileID: 0}
+  globalLight: {fileID: 726012646}
 --- !u!114 &662701569
 MonoBehaviour:
   m_ObjectHideFlags: 0
