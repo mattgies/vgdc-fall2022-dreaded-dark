@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(jumpNumber);
         if (canMove) {
             float dirX = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
