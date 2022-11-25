@@ -45,10 +45,16 @@ public class PauseMenu : MonoBehaviour
         //some code to reset you to the beginning of the level
     }
 
+    public void goToInnerMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     public void GoToMainMenu(){
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
+
 
     public void QuitGame(){
         Application.Quit();
