@@ -37,6 +37,14 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
+    public void ResetGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+        //some code to reset you to the beginning of the level
+    }
+
     public void GoToMainMenu(){
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
