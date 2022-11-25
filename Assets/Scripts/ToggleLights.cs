@@ -31,7 +31,7 @@ public class ToggleLights : MonoBehaviour
             Debug.Log(_canToggleLights);
             Debug.Log(lightSource.intensity);
             if (lightSource.intensity == 0.0f) {
-                lightSource.intensity = 1.0f;
+                lightSource.intensity = 2.0f;
                 playerMovement.prohibitMovement();
                 _canToggleLights = true;
             }
