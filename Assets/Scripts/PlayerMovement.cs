@@ -110,5 +110,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void resetJump() {
         jumpNumber = 1;
+        coyoteTimeCounter = coyoteTimeFirst;
     }
 }
