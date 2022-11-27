@@ -45,6 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hazards
+    uniqueID: 842455883
+    locked: 0
   - name: Platforms
     uniqueID: 3051315979
     locked: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: hazard-ledge2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: f208311d902e6fd4baf207f7c24a5736, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca54d3c0fa1e10841adfee13c3bcddaa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
