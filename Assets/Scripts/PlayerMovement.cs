@@ -10,11 +10,13 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer rend;
     private Animator anim;
 
-    private int jumpNumber = 1;
+    private bool groundJump = true;
+    private bool airJump = false;
+    private int jumpCounter = 0;
     public bool canMove = true;
     private float coyoteTimeCounter;
-    private float coyoteTimeFirst = 0.15f;
-    private float coyoteTimeSecond = 0.3f;
+    private float coyoteTimeFirst = 0.12f;
+    private float airSpamTime = 0.3f;
 
     // private bool canDash = true;
     // private bool isDashing = false;
@@ -39,49 +41,58 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove) {
             float dirX = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);
+            rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);  //speed
+            Vector2 jumpHeight = new Vector2(rb.velocity.x, 12f);  //jump
 
-            Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.1f, rb.position.y);
-            Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.1f, rb.position.y);
-
-            RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, GetComponent<CapsuleCollider2D>().size.y / 2 + 0.03f);
-            RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, GetComponent<CapsuleCollider2D>().size.y / 2 + 0.03f);
+            Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.2f, rb.position.y);
+            Vector2 rightSideSensor = new Vector2(rb.position.x + collider.bounds.extents.x - 0.2f, rb.position.y);
+            float rayDistance = collider.bounds.extents.y + 0.05f;
+            RaycastHit2D leftSideHit = Physics2D.Raycast(leftSideSensor, Vector2.down, rayDistance);
+            RaycastHit2D rightSideHit = Physics2D.Raycast(rightSideSensor, Vector2.down, rayDistance);
             
             Color rayColor = Color.red;
-
+            //if touching ground
             if (
                 (leftSideHit.collider && leftSideHit.collider.gameObject.tag == "Ground"
                 || rightSideHit.collider && rightSideHit.collider.gameObject.tag == "Ground")
                 && rb.velocity.y <= 0
             ) {
-                jumpNumber = 1;
-                coyoteTimeCounter = coyoteTimeFirst;
-
                 rayColor = Color.green;
+                groundJump = true;
+                coyoteTimeCounter = coyoteTimeFirst;
+                jumpCounter = 0;
+                
             }
+            //if not touching ground
             else {
-                if (jumpNumber == 1){
+                if (groundJump){
                     coyoteTimeCounter -= Time.deltaTime;
                 }
-                else if (jumpNumber == 2){ 
+                if (coyoteTimeCounter <= 0f){
+                    groundJump = false;
+                }
+                if (airJump){
                     coyoteTimeCounter += Time.deltaTime;
                 }
             }
-            Debug.DrawRay(leftSideSensor, Vector2.down, rayColor, 1);
-            Debug.DrawRay(rightSideSensor, Vector2.down, rayColor, 1);
+            Debug.DrawRay(leftSideSensor, new Vector2(0, -rayDistance), rayColor, 1f); 
+            Debug.DrawRay(rightSideSensor, new Vector2(0, -rayDistance), rayColor, 1f);
+
 
             // jump
             bool jumpConditions = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-            //first jump
-            if (jumpConditions && jumpNumber == 1 && coyoteTimeCounter > 0f) {
-                rb.velocity = new Vector2(rb.velocity.x, 12f);
-                jumpNumber++;
-                coyoteTimeCounter = 0f;
+            //ground jump
+            if (jumpConditions && groundJump) {
+                rb.velocity = jumpHeight;
+                groundJump = false;
+                airJump = true;
+                jumpCounter++;
             }
             //second jump
-            else if (jumpConditions && jumpNumber == 2 && coyoteTimeCounter > coyoteTimeSecond) {
-                rb.velocity = new Vector2(rb.velocity.x, 12f);
-                jumpNumber++;
+            else if (jumpConditions && ((airJump && coyoteTimeCounter >= airSpamTime) || jumpCounter == 0)) {
+                rb.velocity = jumpHeight;
+                airJump = false;
+                jumpCounter++;
             }
 
             anim.speed = Mathf.Min(rb.velocity.magnitude / 10, 1);
@@ -107,4 +118,5 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         anim.enabled = true;
     }
+
 }
