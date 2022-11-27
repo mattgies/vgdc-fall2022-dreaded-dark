@@ -107,9 +107,4 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         anim.enabled = true;
     }
-
-    public void resetJump() {
-        jumpNumber = 1;
-        coyoteTimeCounter = coyoteTimeFirst;
-    }
 }

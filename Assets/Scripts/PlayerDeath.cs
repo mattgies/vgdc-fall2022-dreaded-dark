@@ -26,7 +26,6 @@ public class PlayerDeath : MonoBehaviour
             transform.position = checkpointPos.getLastCheckPointPos();
             playerTrail.Clear();
             rb.velocity = new Vector2(0, 0);
-            playerMovement.resetJump();
             totalDeaths++;
             lightSource.intensity = 2.0f;
             playerMovement.prohibitMovement();

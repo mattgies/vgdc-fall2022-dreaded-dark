@@ -32,7 +32,6 @@ public class ToggleLights : MonoBehaviour
                 lightSource.intensity = 2.0f;
                 playerMovement.prohibitMovement();
                 _canToggleLights = true;
-                playerMovement.resetJump();
             }
             else {
                 lightSource.intensity = 0.0f;
