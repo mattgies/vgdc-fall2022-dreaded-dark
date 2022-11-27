@@ -10,12 +10,14 @@ public class ToggleLights : MonoBehaviour
     private UnityEngine.Rendering.Universal.Light2D lightSource;
     private bool _canToggleLights;
     private PlayerMovement playerMovement;
+    private AudioSwitch audioSwitch;
 
     void Start()
     {
         lightSource= globalLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
         _canToggleLights = false;
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        audioSwitch = GameObject.FindWithTag("Audio").GetComponent<AudioSwitch>();
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -37,6 +39,7 @@ public class ToggleLights : MonoBehaviour
                 lightSource.intensity = 0.0f;
                 playerMovement.enableMovement();
             }
+            audioSwitch.toggleAudioLightDark();
         }
     }
 }

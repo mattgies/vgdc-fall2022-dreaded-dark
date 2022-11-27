@@ -11,6 +11,7 @@ public class PlayerDeath : MonoBehaviour
     private int totalDeaths = 0;
     private PlayerMovement playerMovement;
     private UnityEngine.Rendering.Universal.Light2D lightSource;
+    private AudioSwitch audioSwitch;
 
     private void Start(){
         checkpointPos = GetComponent<Checkpoint>();
@@ -18,6 +19,7 @@ public class PlayerDeath : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); 
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         lightSource= globalLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        audioSwitch = GameObject.FindWithTag("Audio").GetComponent<AudioSwitch>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,6 +31,7 @@ public class PlayerDeath : MonoBehaviour
             totalDeaths++;
             lightSource.intensity = 2.0f;
             playerMovement.prohibitMovement();
+            audioSwitch.toggleAudioLightDark();
         }
     }
     //we need to display the deathCount as text and we also need that text to properly be on screen
