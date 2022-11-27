@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 groundJump = true;
                 coyoteTimeCounter = coyoteTimeFirst;
                 jumpCounter = 0;
-                
+                anim.SetBool("Grounded", true);                
             }
             //if not touching ground
             else {
@@ -87,22 +87,29 @@ public class PlayerMovement : MonoBehaviour
                 groundJump = false;
                 airJump = true;
                 jumpCounter++;
+                anim.SetTrigger("Jump");
+                anim.SetBool("Grounded", false);
             }
             //second jump
             else if (jumpConditions && ((airJump && coyoteTimeCounter >= airSpamTime) || jumpCounter == 0)) {
                 rb.velocity = jumpHeight;
                 airJump = false;
                 jumpCounter++;
+                anim.SetTrigger("Jump");
+                anim.SetBool("Grounded", false);
+
             }
 
-            anim.speed = Mathf.Min(rb.velocity.magnitude / 10, 1);
-            
-            if (rb.velocity.x > 0 && rend.flipX == true) {
+            //animations            
+            if (rb.velocity.x > 0.001f && rend.flipX == true) {
                 rend.flipX = false;
             }
-            else if (rb.velocity.x < 0 && rend.flipX == false) {
+            else if (rb.velocity.x < -0.001f && rend.flipX == false) {
                 rend.flipX = true;
             }
+            //animation parameters
+            anim.SetBool("Run", dirX != 0);
+
         }
     }
 
