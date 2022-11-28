@@ -5,8 +5,6 @@ using TMPro;
 
 public class ModifyTextMeshPro : MonoBehaviour
 {
-    public GameObject textDisplay;
-    public GameObject player;
     public TMP_Text canvasText;
     public PlayerMovement pMove;
 
@@ -30,14 +28,14 @@ public class ModifyTextMeshPro : MonoBehaviour
         //But have a time delay between each one
         canvasText.text = "My my, little fawn.";
         Invoke("activateNarration", 3f);
-        /*Debug.Log(lineNum);
-        Invoke("activateNarration", 3f);
         Debug.Log(lineNum);
         Invoke("activateNarration", 3f);
         Debug.Log(lineNum);
         Invoke("activateNarration", 3f);
         Debug.Log(lineNum);
-        Invoke("deactivateNarration", 3f);*/
+        Invoke("activateNarration", 3f);
+        Debug.Log(lineNum);
+        Invoke("deactivateNarration", 3f);
 
         /*Not sure where to stick this though
           canvasText.text = "Use the WASD or Arrow keys to move around";
