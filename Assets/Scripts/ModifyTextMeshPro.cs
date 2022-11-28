@@ -47,6 +47,7 @@ public class ModifyTextMeshPro : MonoBehaviour
 
         pDead = new PlayerDeath();
         numDeaths = 0; 
+        
         narrationIndex = 0;
         instructionIndex = 0;
 
