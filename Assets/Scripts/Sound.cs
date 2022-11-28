@@ -10,5 +10,8 @@ public class Sound
     [Range(0f, 1f)] // Slider
     public float volume;
     [Range(.1f, 3f)]
-    public float pitch; 
+    public float pitch;
+
+    [HideInInspector]
+    public AudioSource source;
 }
