@@ -45,4 +45,8 @@ public class PlayerDeath : MonoBehaviour
     }
     //we need to display the deathCount as text and we also need that text to properly be on screen
     
+    public int getDeathCount()
+    {
+        return totalDeaths;
+    }
 }
