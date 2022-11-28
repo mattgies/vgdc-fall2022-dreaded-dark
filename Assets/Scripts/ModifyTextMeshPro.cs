@@ -20,6 +20,7 @@ public class ModifyTextMeshPro : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        narration = new string[12];
         narration[0] = "My my, little fawn.";
         narration[1] = "You're a long way from the forest, aren't you?";
         narration[2] = "Scared of the dark, are you?";
@@ -46,6 +47,7 @@ public class ModifyTextMeshPro : MonoBehaviour
 
         pDead = new PlayerDeath();
         numDeaths = 0; 
+        
         narrationIndex = 0;
         instructionIndex = 0;
 
