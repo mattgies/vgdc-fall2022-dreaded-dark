@@ -42,6 +42,8 @@ public class PlayerDeath : MonoBehaviour
         lightSource.intensity = 0.0f;
         playerMovement.enableMovement();
         audioSwitch.onResetAudioSwitch();
+        checkpointPos.resetCheckPoint();
+        totalDeaths = 0;
     }
     //we need to display the deathCount as text and we also need that text to properly be on screen
     

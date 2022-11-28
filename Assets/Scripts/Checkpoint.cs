@@ -28,4 +28,8 @@ public class Checkpoint : MonoBehaviour
     public Vector2 getFirstCheckPointPos(){
         return FirstCheckPointPos;
     }
+
+    public void resetCheckPoint(){
+        LastCheckPointPos = FirstCheckPointPos;
+    }
 }
