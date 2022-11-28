@@ -6,59 +6,123 @@ using TMPro;
 public class ModifyTextMeshPro : MonoBehaviour
 {
     public TMP_Text canvasText;
-    public TMP_Text tutorial;
-    public TMP_Text deathCount;
-    public int numDeaths; 
-    public PlayerDeath pDead;
+    public PlayerMovement pMove;
 
-    public string[] narration;
-    public string[] instructions;
-
-    public int narrationIndex;
-    public int instructionIndex;
+    private int lineNum;
+    
+    private bool hasTriggeredLight;
+    private bool hasTriggeredLevel2;
+    private bool hasEncounteredEnemies;
+    private bool narration_active;
 
     // Start is called before the first frame update
     void Start()
     {
-        narration = new string[12];
-        narration[0] = "My my, little fawn.";
-        narration[1] = "You're a long way from the forest, aren't you?";
-        narration[2] = "Scared of the dark, are you?";
-        narration[3] = "Try that switch there.";
+        lineNum = 0;
+        hasTriggeredLight = false;
+        hasTriggeredLevel2 = false;
+        hasEncounteredEnemies = false;
+        narration_active = false;
 
-        instructions[0] = "Press 'F' to interact";
+        Time.timeScale = 1f;
+        //But have a time delay between each one
+        canvasText.text = "My my, little fawn.";
+        Invoke("activateNarration", 3f);
+        Debug.Log(lineNum);
+        Invoke("activateNarration", 3f);
+        Debug.Log(lineNum);
+        Invoke("activateNarration", 3f);
+        Debug.Log(lineNum);
+        Invoke("activateNarration", 3f);
+        Debug.Log(lineNum);
+        Invoke("deactivateNarration", 3f);
 
-        narration[4] = "Surprised?";
-        narration[5] = "The light may seem kind, but it can also blind you.";
-
-        instructions[1] = "Press 'F' to turn the lights back off";
-
-        narration[6] = "I'm afraid, poor child, that while in these dark woods, you must trust the darkness to be your ally.";
-        narration[7] = "Now, follow me.";
-
-        instructions[2] = "Use the WASD or Arrow keys to move around";
-        instructions[3] = "Press the space bar to jump";
-
-        narration[8] = "Well done, child. But there is still a long way to go.";
-        narration[9] = "Beware. Some creatures intend to do you harm.";
-        narration[10] = "Make sure you understand their movements before proceeding further.";
-
-        narration[11] = "Finally, you're free.";
-
-        pDead = new PlayerDeath();
-        numDeaths = 0; 
-        
-        narrationIndex = 0;
-        instructionIndex = 0;
-
-        canvasText.text = "Some text";
-        string textVariable = "Some Text 2";
+        /*Not sure where to stick this though
+          canvasText.text = "Use the WASD or Arrow keys to move around";
+          canvasText.text = "Press the space bar to jump";
+          
+          I think for the ending you'd need to trigger some kind of event?
+          
+          Like if Player.transform.position > the position of the last light
+          Then make the screen fade
+          Give the final line: canvasText.text = "You're finally free..."
+          And roll the credits*/
     }
 
     // Update is called once per frame
+
     void Update()
     {
-        numDeaths = pDead.getDeathCount();
-        deathCount.text = "Deaths: " + numDeaths;
+        if(narration_active == true)
+        {
+            pMove.prohibitMovement();
+        }
     }
+
+    //Meant for when you pass by a light/etc.
+    //Probably needs a different kind of Collider because the player can't touch the text box
+    
+    /*void onTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("LightSwitch1") && hasTriggeredLight == false)
+        {
+            canvasText.text = "Press 'F' to interact";
+            if(Input.GetKeyDown("F"))
+            {
+                canvasText.text = "Surprised?";
+                //Something wait for five seconds
+                canvasText.text = "The light may seem kind, but it can also blind you.";
+                //Something wait for five seconds
+                canvasText.text = "Press 'F' to turn the lights back off";
+                hasTriggeredLight = true;
+            }
+            canvasText.text = "I'm afraid, poor child, that while in these dark woods, you must trust the darkness to be your ally.";
+            canvasText.text = "Now, follow me.";
+
+        }
+        elif(other.CompareTag("LightSwitch3") && hasTriggeredLevel2 == false)
+        {
+            canvasText.text = "Well done, child. But there is still a long way to go.";
+            hasTriggeredLevel2 = true;
+        }
+        elif(other.CompareTag("LightSwitch5") && hasEncounteredEnemies == false)
+        {
+            canvasText.text = "Beware. Some creatures intend to do you harm."
+            canvasText.text = "Make sure you understand their movements before proceeding further."
+            hasEncounteredEnemies = true;
+        }
+        else
+        {
+            return; 
+        }
+    }*/
+
+    void activateNarration()
+    {
+        if(lineNum == 0)
+        {
+            canvasText.text = "My my, little fawn.";
+        }
+        else if(lineNum == 2)
+        {
+            canvasText.text = "You're a long way from the forest, aren't you?";
+        }
+        else if(lineNum == 3) //jumps straight to here for some reason and skips the other two lines
+        {
+            canvasText.text = "Scared of the dark, are you?";
+        }
+        else
+        {
+            canvasText.text = "Try that switch there.";
+        }
+        lineNum += 1;
+        narration_active = true;
+    }
+
+    void deactivateNarration()
+    {
+        narration_active = false;
+    }
+    
+
 }
