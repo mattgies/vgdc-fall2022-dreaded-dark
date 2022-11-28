@@ -8,21 +8,29 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject controlsMenu;
     public bool isPaused;
+    private string sceneName;
     void Start()
     {
         pauseMenu.SetActive(false);
         controlsMenu.SetActive(false);
+        Scene currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)){
-            if(isPaused){
-                ResumeGame();
-            }
-            else{
-                PauseGame();
+        if (sceneName != "Menu") {
+            if(Input.GetKeyDown(KeyCode.Escape)){
+                if(isPaused){
+                    if (!controlsMenu.activeInHierarchy){
+                        ResumeGame();
+                    }
+                }
+                else {
+                    PauseGame();
+                    
+                }
             }
         }
     }
