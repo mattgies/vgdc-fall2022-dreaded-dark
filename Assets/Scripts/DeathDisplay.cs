@@ -9,10 +9,14 @@ public class DeathDisplay : MonoBehaviour
     public int numDeaths; 
     public PlayerDeath pDead;
 
+    public GameObject deathCountDisplay;
+
+
     // Start is called before the first frame update
     void Start()
     {
         numDeaths = 0; 
+        deathCountDisplay = GameObject.Find("DeathCount");
     }
 
     // Update is called once per frame
@@ -20,5 +24,6 @@ public class DeathDisplay : MonoBehaviour
     {
         numDeaths = pDead.getDeathCount();
         deathCount.text = "Deaths: " + numDeaths;
+        deathCountDisplay.GetComponent<CanvasGroup>().alpha = DeathToggle.toggle;
     }
 }
