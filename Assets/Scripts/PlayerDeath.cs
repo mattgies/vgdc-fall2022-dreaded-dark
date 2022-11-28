@@ -34,6 +34,15 @@ public class PlayerDeath : MonoBehaviour
             audioSwitch.toggleAudioLightDark();
         }
     }
+
+    public void ResetLevel(){
+        transform.position = checkpointPos.getFirstCheckPointPos();
+        playerTrail.Clear();
+        rb.velocity = new Vector2(0, 0);
+        lightSource.intensity = 0.0f;
+        playerMovement.enableMovement();
+        audioSwitch.onResetAudioSwitch();
+    }
     //we need to display the deathCount as text and we also need that text to properly be on screen
     
 }

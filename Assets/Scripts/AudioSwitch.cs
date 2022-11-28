@@ -24,4 +24,11 @@ public class AudioSwitch : MonoBehaviour
         audioSource.time = curTime;
         audioSource.Play();
     }
+
+    public void onResetAudioSwitch(){
+        float curTime = audioSource.time;
+        audioSource.clip = clipsToSwitchBetween[1];
+        audioSource.time = curTime;
+        audioSource.Play();
+    }
 }
