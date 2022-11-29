@@ -27,7 +27,7 @@ public class PlayerDeath : MonoBehaviour
         //spikes and deathbox
         if (other.CompareTag("Environmental Hazard")){
             transform.position = checkpointPos.getLastCheckPointPos();
-            FindObjectOfType<AudioManager>().Play("respawn"); // Audio addition for death sound
+           // FindObjectOfType<AudioManager>().Play("respawn"); // Audio addition for death sound
             playerTrail.Clear();
             rb.velocity = new Vector2(0, 0);
             totalDeaths++;

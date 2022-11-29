@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         if (canMove) {
             float dirX = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(dirX * 6f, rb.velocity.y);  //speed
-            FindObjectOfType<AudioManager>().Play("footsteps"); // Audio addition for footsteps
+           // FindObjectOfType<AudioManager>().Play("footsteps"); // Audio addition for footsteps
             Vector2 jumpHeight = new Vector2(rb.velocity.x, 12f);  //jump
 
             Vector2 leftSideSensor = new Vector2(rb.position.x - collider.bounds.extents.x + 0.2f, rb.position.y);
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                 groundJump = true;
                 coyoteTimeCounter = coyoteTimeFirst;
                 jumpCounter = 0;
-                FindObjectOfType<AudioManager>().Play("jump"); // Audio addition for jump sound
+                //FindObjectOfType<AudioManager>().Play("jump"); // Audio addition for jump sound
                 anim.SetBool("Grounded", true);                
             }
             //if not touching ground
